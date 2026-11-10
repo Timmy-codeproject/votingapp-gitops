@@ -4,6 +4,8 @@ metadata:
   name: db
   labels:
     app.kubernetes.io/name: db
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   serviceName: db
   replicas: 1
@@ -27,7 +29,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-credentials   
+                  name: db-credentials
                   key: POSTGRES_PASSWORD
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
@@ -63,9 +65,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db             
+  name: db
   labels:
     app.kubernetes.io/name: db
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   selector:
     app.kubernetes.io/name: db
